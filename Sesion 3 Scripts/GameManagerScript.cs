@@ -6,6 +6,7 @@ public class GameManagerScript : MonoBehaviour
 {
     public GameObject myPrefab;
     List<GameObject> cardList = new List<GameObject>();
+    public List<Sprite> faces;
     
     // Start is called before the first frame update
     void Start()
@@ -15,20 +16,23 @@ public class GameManagerScript : MonoBehaviour
 
         GameObject nueva_carta;
 
-        for (int i = 1; i < 11; i++)
+        for (int i = 0; i < 10; i++)
         {
             nueva_carta = Instantiate(myPrefab, new Vector3(posX, posY, 0), Quaternion.identity);
             nueva_carta.name = "Carta" + i;
+
+            int random = Random.Range(0, faces.Count);
+            nueva_carta.GetComponent<CardScript>().front = faces[random];
+            faces.RemoveAt(random);
+
             cardList.Add(nueva_carta);
 
             posX += 3;
-            if (i == 5)
+            if (i == 4)
             {
                 posX = -7;
                 posY = -3;
             }
-
-
         }
     }
 
