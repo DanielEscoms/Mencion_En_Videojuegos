@@ -13,6 +13,7 @@ public class GameManagerScript : MonoBehaviour
     int[] tipos = { 7, 1, 0, 9, 6 };
     int state = 1;
     int cardUp, cardUpIndex;
+    int numParejas = 0;
     
     
     // Start is called before the first frame update
@@ -74,6 +75,8 @@ public class GameManagerScript : MonoBehaviour
                 Debug.Log("Ha salido pareja");
                 cardList[index].SetActive(false);
                 cardList[cardUpIndex].SetActive(false);
+                numParejas++;
+                texto.GetComponent<Text>().text = "Num parejas: " + numParejas;
             }
             else
             {
