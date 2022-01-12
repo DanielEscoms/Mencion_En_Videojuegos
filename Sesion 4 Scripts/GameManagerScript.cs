@@ -1,16 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManagerScript : MonoBehaviour
 {
     public GameObject myPrefab;
+    public GameObject texto;
     List<GameObject> cardList = new List<GameObject>();
     public List<Sprite> faces;
     int[] contador = { 0, 0, 0, 0, 0 };
     int[] tipos = { 7, 1, 0, 9, 6 };
     int state = 1;
-    int cardUp;
+    int cardUp, cardUpIndex;
+    
     
     // Start is called before the first frame update
     void Start()
@@ -39,6 +42,7 @@ public class GameManagerScript : MonoBehaviour
 
             nueva_carta.GetComponent<CardScript>().front = faces[pos];
             nueva_carta.GetComponent<CardScript>().tipo = tipos[pos];
+            nueva_carta.GetComponent<CardScript>().index = i;
 
             cardList.Add(nueva_carta);
 
@@ -49,15 +53,18 @@ public class GameManagerScript : MonoBehaviour
                 posY = -2;
             }
         }
+
+        texto.GetComponent<Text>().text = "Num Parejas: 0";
     }
 
-    public void ClickOnCard(int t)
+    public void ClickOnCard(int t, int index)
     {
         Debug.Log("He hecho click on card."+t);
 
         if (state == 1)
         {
             cardUp = t;
+            cardUpIndex = index;
             state = 2;
         }
         else 
@@ -65,13 +72,25 @@ public class GameManagerScript : MonoBehaviour
             if(t== cardUp)
             {
                 Debug.Log("Ha salido pareja");
+                cardList[index].SetActive(false);
+                cardList[cardUpIndex].SetActive(false);
             }
             else
             {
                 Debug.Log("No hay pareja");
+                StartCoroutine(WaitAndPrint(index));
+                Debug.Log("No hay pareja después del Wait");
             }
             state = 1;
         }
+    }
+
+    IEnumerator WaitAndPrint(int i)
+    {
+        Debug.Log("Antes del waitforseconds");
+        yield return new WaitForSeconds(2);
+        cardList[i].GetComponent<CardScript>().Toggle();
+        cardList[cardUpIndex].GetComponent<CardScript>().Toggle();
     }
 
     // Update is called once per frame

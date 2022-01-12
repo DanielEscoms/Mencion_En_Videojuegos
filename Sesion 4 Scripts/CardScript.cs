@@ -11,7 +11,8 @@ public class CardScript : MonoBehaviour
     //GameObject myGameManager;
     GameManagerScript myGameMAnagerScript;
     public int tipo;
-    
+    public int index;
+
     private void Awake()
     {
         myRenderer = GetComponent<SpriteRenderer>();
@@ -28,8 +29,14 @@ public class CardScript : MonoBehaviour
     
     private void OnMouseDown()
     {
-        myGameMAnagerScript.ClickOnCard(tipo);
+        myGameMAnagerScript.ClickOnCard(tipo, index);
 
+        Toggle();
+    }
+    // Update is called once per frame
+    
+    public void Toggle()
+    {
         if (!faceUp)
         {
             myRenderer.sprite = front;
@@ -41,7 +48,6 @@ public class CardScript : MonoBehaviour
 
         faceUp = !faceUp;
     }
-    // Update is called once per frame
     void Update()
     {
         
