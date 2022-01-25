@@ -41,4 +41,14 @@ public class SpaceShipScript : MonoBehaviour
             canShot = false;
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("Nave: Collision");
+    }
+
+    public void SetCanShot()
+    {
+        canShot = true;
+    }
 }
