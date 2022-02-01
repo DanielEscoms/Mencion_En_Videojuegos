@@ -6,12 +6,17 @@ public class EnemyScript : MonoBehaviour
 {
     bool directionRight = true;
     float sleep = 0.8f;
+    bool inGame = true;
 
     // Start is called before the first frame update
     void Start()
     {
         // InvokeRepeating("MoveEnemy", 0.5f, 0.5f); // Llama a la función MoveEnemy, a los 0,5sec y vuelve a llarmarla a los 0.5sec
-        StartCoroutine(Wait());
+        if (inGame)
+        {
+            StartCoroutine(Wait());
+        }
+        
     }
 
     // Update is called once per frame
@@ -23,7 +28,10 @@ public class EnemyScript : MonoBehaviour
     IEnumerator Wait()
     {
         yield return new WaitForSeconds(sleep);
-        MoveEnemy();
+        if (inGame)
+        {
+            MoveEnemy();
+        }
         StartCoroutine(Wait());
     }
 
@@ -62,6 +70,10 @@ public class EnemyScript : MonoBehaviour
         if (collision.gameObject.tag == "Torpedo")
         {
             Destroy(gameObject);
+        }
+        else if (collision.gameObject.tag == "Player")
+        {
+            inGame = false;
         }
         
     }
