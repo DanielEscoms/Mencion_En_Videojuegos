@@ -7,12 +7,16 @@ public class ShotScript : MonoBehaviour
 {
     GameObject spaceShip;
     SpaceShipScript scriptNave;
+    GameObject spaceHorda;
+    HordaScript scriptHorda;
 
     // Start is called before the first frame update
     void Start()
     {
         spaceShip = GameObject.FindGameObjectWithTag("Player");
         scriptNave = spaceShip.GetComponent<SpaceShipScript>();
+        spaceHorda = GameObject.FindGameObjectWithTag("Horda");
+        scriptHorda = spaceHorda.GetComponent<HordaScript>();
     }
 
     // Update is called once per frame
@@ -25,9 +29,14 @@ public class ShotScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            scriptNave.inGame = false;
-            scriptNave.texto.GetComponent<Text>().text = "YOU WIN";
-            scriptNave.texto.SetActive(true);
+            scriptHorda.contador++;
+            //Debug.Log(scriptHorda.contador);
+            if (scriptHorda.contador == 3)
+            {
+                scriptNave.inGame = false;
+                scriptNave.texto.GetComponent<Text>().text = "YOU WIN";
+                scriptNave.texto.SetActive(true);
+            }
         }
         Debug.Log("SHOT: He chocado con " + collision.gameObject.name);
         scriptNave.SetCanShot();

@@ -11,6 +11,7 @@ public class SpaceShipScript : MonoBehaviour
     bool canShot = true;
     public GameObject texto;
     public bool inGame = true;
+    public GameObject horda;
     
     // Start is called before the first frame update
     void Start()
