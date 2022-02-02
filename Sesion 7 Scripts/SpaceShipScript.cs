@@ -9,8 +9,8 @@ public class SpaceShipScript : MonoBehaviour
     Rigidbody2D myRB;
     public GameObject torpedo;
     bool canShot = true;
-    GameObject texto;
-    bool inGame = true;
+    public GameObject texto;
+    public bool inGame = true;
     
     // Start is called before the first frame update
     void Start()
