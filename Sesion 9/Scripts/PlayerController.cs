@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         float move = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Jump");
         
         if (move > 0 && !faceRight)
         {
@@ -40,8 +41,21 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        myRB.velocity = new Vector2(move * speed, myRB.velocity.y);
+        myRB.velocity = new Vector2(move * speed, moveVertical * speed);
         myAnim.SetFloat("MoveSpeed", Mathf.Abs(move));
+        myAnim.SetFloat("VerticalVelocity", Mathf.Abs(moveVertical));
+
+        if (moveVertical > 0 && myAnim.GetBool("IsGrounded")==true)
+        {
+            myAnim.SetBool("IsGrounded", false);
+        }
+        else
+        {
+            if (moveVertical == 0 && myAnim.GetBool("IsGrounded")==false)
+            {
+                myAnim.SetBool("IsGrounded", true);
+            }
+        }
     }
 
     private void Turn()
